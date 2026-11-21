@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Лунолесье</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#171e21;color:#f5edda;font:16px system-ui}main{max-width:1050px;margin:auto;padding:16px}header{background:linear-gradient(90deg,#18291dee,#18291d20),url(day.png) center/cover;border-radius:16px;padding:clamp(24px,7vw,90px);min-height:360px}h1{font:bold clamp(42px,9vw,84px) Georgia;margin:0 0 16px}button{font:inherit;font-weight:650;border:0;border-radius:8px;padding:9px 14px;margin:3px;background:#efd18b;color:#29231b;cursor:pointer}button:disabled{opacity:.5;cursor:default}button:focus-visible{outline:3px solid white;outline-offset:2px}canvas{display:block;width:100%;height:auto;border-radius:12px;image-rendering:pixelated;border:2px solid #62715a}#game{max-width:900px;margin:auto}.bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}#stats{font-weight:650}#actions{min-height:48px}#feedback{min-height:24px;color:#f7d48f}#near{margin-bottom:3px}small{color:#d7dfcd}.pad{display:flex;flex-wrap:wrap;margin-top:6px}.pad button{min-width:44px} [hidden]{display:none!important}
+.map-wrap{position:relative}#map-tip,#action-tip{position:absolute;z-index:2;pointer-events:none;background:#141d24;color:#fff5dd;padding:6px 10px;border-radius:6px;border:1px solid #c6aa70;white-space:nowrap}#actions button{min-width:48px;font-size:21px}.action-wrap{position:relative}#action-tip{top:100%;left:0}#area{font: bold 22px Georgia;margin:8px 0;color:#efcf90}
+#game{background:#272b26;border:2px solid #82754e;border-radius:14px;overflow:hidden}
+.hud,.game-footer{padding:8px 12px;background:#272b26}
+.hud .bar{gap:4px}.hud p{margin:3px 0}
+#inventory{display:flex;gap:5px;flex-wrap:wrap;padding:8px 0 4px}
+.slot{position:relative;display:grid;place-items:center;width:49px;height:46px;background:#40392d;border:1px solid #ab905e;border-radius:6px;font-size:23px;color:#fff}
+.slot.empty .item-icon{opacity:.4}.count{position:absolute;right:3px;bottom:1px;font:bold 12px system-ui;color:#fff;background:#24251d;border-radius:3px;padding:0 3px}
+.slot:is(:hover,:focus-visible)::after{content:attr(data-label);position:absolute;top:100%;left:0;z-index:5;background:#171e21;border:1px solid #c6aa70;border-radius:5px;color:#fff;padding:5px 8px;white-space:nowrap;font:14px system-ui}
+.map-wrap canvas{border:0;border-radius:0}
+.action-wrap{position:absolute;z-index:3;transform:translateX(-50%);max-width:98%;text-align:center}
+#actions{min-height:0;display:flex;justify-content:center;gap:4px;background:#28281ee8;border-radius:9px;padding:3px}
+#actions button{margin:0;min-width:36px;padding:4px 6px;font-size:19px}
+#action-tip{left:50%;transform:translateX(-50%)}
+.game-footer p{margin:5px 0}#feedback{min-height:24px}#map-tip{max-width:100%}
+.sprite-icon{display:inline-block;width:28px;height:28px;vertical-align:middle;image-rendering:pixelated}
+</style>
+<main>
+<header id="menu">
+<h1>Лунолесье</h1>
+<p>Маленькая ферма на границе двух миров.</p>
+<button id="play">Играть</button><button id="new" hidden>Новая игра</button>
+<p id="menu-status" role="status"></p>
+</header>
+<div id="game" hidden>
+<div class="hud"><div class="bar"><div><p id="area"></p><p id="stats"></p></div><div><button id="save">Сохранить</button><button id="back">Меню</button></div></div>
+<div id="inventory" aria-label="Инвентарь"></div></div>
+<div class="map-wrap"><canvas id="map" width="600" height="360" aria-label="Карта игры"></canvas><span id="map-tip" hidden></span><div id="interaction" class="action-wrap" hidden><div id="actions"></div><span id="action-tip" hidden></span></div></div>
+<div class="game-footer"><p id="quest"></p>
+<p id="feedback" role="status"></p>
+<small>WASD или стрелки — ходить. E — выполнить первое доступное действие. Esc — меню.</small>
+<div class="pad" aria-label="Управление движением">
+<button data-move="left" aria-label="Влево">←</button><button data-move="up" aria-label="Вверх">↑</button><button data-move="down" aria-label="Вниз">↓</button><button data-move="right" aria-label="Вправо">→</button>
+</div>
+</div>
+</div>
+</main>
+<script src="game.js"></script>
+<script src="art.js"></script>
+<script src="world.js"></script>
+</html>
